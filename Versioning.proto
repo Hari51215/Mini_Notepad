@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+message File_version
+{
+  optional int32 actions = 1;
+  optional int32 version_id = 2;
+  optional string created_time = 3;
+  optional int32 version_no = 4;
+  optional int32 projectID = 5;
+}
