@@ -5,6 +5,7 @@
 #include "Versioning.pb.h"
 
 int file_id = 1000;
+int version_id = 100;
 Userportal::User_data file;
 Userportal::Project_portal version;
  
@@ -15,7 +16,7 @@ class Notepad_File
 		string project_name;
 		char C_time[30];
 		int project_id, select, P_ID;
-		int action = 0, version_num = 1, version_id = 100;
+		int action = 0, version_num = 1;
 
 	public:
 
@@ -39,7 +40,7 @@ class Notepad_File
 			cout << "Enter the File Name  : ";
 			cin >> project_name;
 			project_id = file_id++;
-			cout << "Your File ID : " << project_id<< endl;
+			cout << "Your File ID : " << project_id << endl;
 
 			Userportal::Project_portal* f = file.add_projects();
 			f->set_project_name(project_name);
@@ -116,6 +117,10 @@ class Notepad_File
 					}
 				}
 			}		
+			if (file.projects_size() == 0)
+			{
+				cout << "File Not Found." << endl;
+			}
 		}
 
 		void add_content(int P_ID)
