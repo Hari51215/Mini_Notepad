@@ -1,5 +1,6 @@
 #pragma once
 
+#include <time.h>
 #include "Portal.h"
 #include "Versioning.pb.h"
 
@@ -11,7 +12,8 @@ class Notepad_File
 {
 	protected:
 
-		string project_name, time;
+		string project_name;
+		char C_time[30];
 		int project_id, select, P_ID;
 		int action = 0, version_num = 1, version_id = 100;
 
@@ -51,7 +53,11 @@ class Notepad_File
 			File_version* v = version.add_versions();
 			v->set_actions(action);
 			v->set_version_id(version_id);
-			//v->set_created_time(time);
+
+			time_t result = time(NULL);
+			ctime_s(C_time, sizeof C_time, &result);
+			v->set_created_time(C_time);
+
 			v->set_version_no(version_num);
 			v->set_projectid(project_id);
 
