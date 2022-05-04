@@ -106,8 +106,7 @@ class Notepad_File
 					{
 						version_num++;
 						write_version();
-						action = 0;
-						
+						action = 0;	
 					}
 				}
 			}		
