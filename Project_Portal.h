@@ -4,8 +4,6 @@
 #include "Portal.h"
 #include "Versioning.pb.h"
 
-int file_id = 1000;
-int version_id = 100;
 Userportal::User_data file;
 Userportal::Project_portal version;
  
@@ -13,10 +11,12 @@ class Notepad_File
 {
 	protected:
 
+		int file_id = 1000;
+		int version_id = 100;
 		string project_name;
 		char C_time[30];
 		int project_id, select, P_ID;
-		int action = 0, version_num = 1;
+		int action = 1, version_num = 1;
 
 	public:
 
@@ -274,6 +274,32 @@ class Notepad_File
 						display_content(P_ID);
 					}
 				}
+			}
+		}
+
+		void display()
+		{
+			for (int i = 0; i < file.projects_size(); ++i)
+			{
+				Userportal::Project_portal f = file.projects(i);
+				cout << "Project Name : " << f.project_name() << endl;
+				cout << "Project ID : " << f.project_id() << endl;
+
+				cout << endl;
+			}
+
+			cout << endl << endl << endl;
+
+			for (int i = 0; i < version.versions_size(); ++i)
+			{
+				File_version v = version.versions(i);
+				cout << "Actions : " << v.actions() << endl;
+				cout << "Version ID : " << v.version_id() << endl;
+				cout << "Version Number :  " << v.version_no() << endl;
+				cout << "Created Time : " << v.created_time() << endl;
+				cout << "Project ID : " << v.projectid() << endl;
+
+				cout << endl;
 			}
 		}
 };
