@@ -43,6 +43,8 @@ int main()
                                 break;
 
                             case 3:
+                                N_obj.display();
+                                cout << "Closed" << endl;
                                 exit(0);
 
                             default:
@@ -62,7 +64,7 @@ int main()
                 break;
 
             case 3:
-                //L_obj.display();
+                L_obj.display();
                 cout << "Signed Out" << endl;
                 exit(0);
             default:
