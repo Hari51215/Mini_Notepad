@@ -11,13 +11,13 @@ using std::endl;
 using std::string;
 
 Userportal::User_file person;
-int individual_id = 10000,user_id;
+int user_id;
 
 class Login
 {
     protected:
         string user_name, email, location, password;
-        int age = 0;
+        int individual_id = 10000, age = 0;
 
     public:
         string encryption(string str)
