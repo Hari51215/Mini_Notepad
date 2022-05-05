@@ -17,7 +17,7 @@ class Login
 {
     protected:
         string user_name, email, location, password;
-        int individual_id = 10000, age = 0;
+        int individual_id = 10000,age = 0;
 
     public:
         string encryption(string str)
@@ -34,7 +34,7 @@ class Login
         {
             std::fstream input("login_Details.bin", std::ios::in | std::ios::binary);
             if (!person.ParseFromIstream(&input))
-                std::cerr << "Login_details.bin , File not Found" << endl;
+                std::cerr << "Login_details.bin, File not Found" << endl;
             individual_id += person.candidate_size();
         }
 
