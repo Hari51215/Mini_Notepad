@@ -14,13 +14,13 @@ protected:
 
 	int file_id = 1000;
 	int version_id = 100;
-	string project_name;
+	string project_name, data ="NULL";
 	char C_time[30];
 	int project_id, select, P_ID;
 	int action = 1, version_num = 1;
 
 public:
-
+	Version_control::Versioning* c = control.add_commit();
 	void read_file()
 	{
 		std::fstream input("Project_Details.bin", std::ios::in | std::ios::binary);
@@ -51,20 +51,23 @@ public:
 		v->set_version_id(version_id);
 		v->set_projectid(project_id);
 
+		std::fstream output("Versions.bin", std::ios::out | std::ios::trunc | std::ios::binary);
+		if (!version.SerializeToOstream(&output))
+			std::cerr << "Failed to Write the Details in File" << endl;
 
-		Version_control::Versioning* c = control.add_commit();
+		file_version(data);
+	}
+
+	void file_version(string data)
+	{
+		string text = data;
 		c->set_actions(action);
 		c->set_version_no(version_num);
 
 		time_t result = time(NULL);
 		ctime_s(C_time, sizeof C_time, &result);
 		c->set_created_time(C_time);
-		c->mutable_content();
-
-
-		std::fstream output("Versions.bin", std::ios::out | std::ios::trunc | std::ios::binary);
-		if (!version.SerializeToOstream(&output))
-			std::cerr << "Failed to Write the Details in File" << endl;
+		c->add_content(text);
 	}
 
 	void new_file()
@@ -131,9 +134,9 @@ public:
 				}
 				if (action == 5)
 				{
+					write_version();
 					version_num++;
 					action = 0;
-					write_version();
 				}
 			}
 		}
@@ -160,6 +163,7 @@ public:
 			textfile.close();
 		}
 		cout << "Content Successfully Added into the File" << endl << endl;
+		file_version(add_text);
 	}
 
 	void update_content(int P_ID)
@@ -193,6 +197,7 @@ public:
 				}
 				textfile.close();
 			}
+			file_version(newline);
 		}
 		else if (option == 2)
 		{
@@ -206,6 +211,7 @@ public:
 				textfile << update;
 				textfile.close();
 			}
+			file_version(update);
 		}
 		else
 			cout << "Invalid Option !" << endl;

@@ -1,0 +1,15 @@
+syntax = "proto3";
+package Version_control;
+message Versioning
+{
+  optional int32 actions = 1;
+  optional string created_time = 2;
+  optional int32 version_no = 3;
+  repeated string content = 4;
+}
+message File_version
+{
+  optional int32 version_id = 1;
+  optional int32 projectID = 2;
+  repeated Versioning commit = 4;
+}
