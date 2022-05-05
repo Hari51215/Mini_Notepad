@@ -35,6 +35,21 @@ class Notepad_File
 				std::cerr << "Failed to Write the Details in File";
 		}
 
+		void read_version()
+		{
+			std::fstream input("Versions.bin", std::ios::in | std::ios::binary);
+			if (!version.ParseFromIstream(&input))
+				std::cerr << "Versions.bin , File not Found" << endl;
+			version_id += version.versions_size();
+		}
+
+		void write_version()
+		{
+			std::fstream output("Versions.bin", std::ios::out | std::ios::trunc | std::ios::binary);
+			if (!version.SerializeToOstream(&output))
+				std::cerr << "Failed to Write the Details in File" << endl;
+		}
+
 		void new_file()
 		{
 			cout << "Enter the File Name  : ";
@@ -112,8 +127,8 @@ class Notepad_File
 					if (action == 5)
 					{
 						version_num++;
+						action = 0;
 						write_version();
-						action = 0;	
 					}
 				}
 			}		
@@ -244,13 +259,6 @@ class Notepad_File
 			}
 		}
 
-		void write_version()
-		{
-			std::fstream output("Versions.bin", std::ios::out | std::ios::trunc | std::ios::binary);
-			if (!version.SerializeToOstream(&output))
-				std::cerr << "Failed to Write the Details in File" << endl;
-		}
-
 		void revert_version()
 		{
 			int V_id = 0, V_num = 0;
@@ -282,13 +290,13 @@ class Notepad_File
 			for (int i = 0; i < file.projects_size(); ++i)
 			{
 				Userportal::Project_portal f = file.projects(i);
-				cout << "Project Name : " << f.project_name() << endl;
+				cout << endl << "Project Name : " << f.project_name() << endl;
 				cout << "Project ID : " << f.project_id() << endl;
 
 				cout << endl;
 			}
 
-			cout << endl << endl << endl;
+			cout << endl;
 
 			for (int i = 0; i < version.versions_size(); ++i)
 			{
@@ -296,7 +304,7 @@ class Notepad_File
 				cout << "Actions : " << v.actions() << endl;
 				cout << "Version ID : " << v.version_id() << endl;
 				cout << "Version Number :  " << v.version_no() << endl;
-				cout << "Created Time : " << v.created_time() << endl;
+				cout << "Created Time : " << v.created_time();
 				cout << "Project ID : " << v.projectid() << endl;
 
 				cout << endl;
