@@ -2,18 +2,19 @@
 
 int main()
 {
-    int  option,validation,choice;
+    int  option, validation, choice;
     Login L_obj;
     Notepad_File N_obj;
 
     L_obj.read_file();
     N_obj.read_file();
+    N_obj.read_version();
 
     while (1)
     {
-        cout << "-----------------" << endl;
-        cout << "User Login Portal" << endl;
-        cout << "-----------------" << endl << endl;
+        cout << "---------------------" << endl;
+        cout << "  User Login Portal  " << endl;
+        cout << "---------------------" << endl << endl;
         cout << "1. Sign In\n2. Sign Up\n3. Sign Out" << endl << endl;
         cout << "Select the Option : ";
         cin >> option;
