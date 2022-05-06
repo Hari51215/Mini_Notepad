@@ -58,6 +58,20 @@ public:
 		file_version(data);
 	}
 
+	void read_file_version()
+	{
+		std::fstream input("Versioning.bin", std::ios::in | std::ios::binary);
+		if (!version.ParseFromIstream(&input))
+			std::cerr << "Versioning.bin , File not Found" << endl;
+	}
+
+	void write_file_version()
+	{
+		std::fstream output("Versioning.bin", std::ios::out | std::ios::trunc | std::ios::binary);
+		if (!version.SerializeToOstream(&output))
+			std::cerr << "Failed to Write the Details in File" << endl;
+	}
+
 	void file_version(string data)
 	{
 		string text = data;
@@ -68,6 +82,8 @@ public:
 		ctime_s(C_time, sizeof C_time, &result);
 		c->set_created_time(C_time);
 		c->add_content(text);
+
+		write_file_version();
 	}
 
 	void new_file()
@@ -289,14 +305,29 @@ public:
 				cin >> V_num;
 				if (version.versions(i).version_no() == V_num)
 				{
-					P_ID = version.versions(i).projectid();
-					display_content(P_ID);
+					print_version(V_num);
 				}
 			}
 		}
 	}
 
-	void display()
+	void print_version(int num)
+	{
+		project_id = P_ID;
+		std::fstream textfile;
+		textfile.open(std::to_string(project_id) + ".txt", std::ios::in);
+		if (textfile.is_open())
+		{
+			string display_text;
+			while (getline(textfile, display_text))
+			{
+				cout << display_text << endl;
+			}
+			textfile.close();
+		}
+	}
+
+	void display_all()
 	{
 		for (int i = 0; i < file.projects_size(); ++i)
 		{

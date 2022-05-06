@@ -9,6 +9,7 @@ int main()
     L_obj.read_file();
     N_obj.read_file();
     N_obj.read_version();
+    N_obj.read_file_version();
 
     while (1)
     {
@@ -44,7 +45,7 @@ int main()
                                 break;
 
                             case 3:
-                                N_obj.display();
+                                //N_obj.display_all();
                                 cout << "Closed" << endl;
                                 exit(0);
 
