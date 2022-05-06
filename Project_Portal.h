@@ -6,7 +6,7 @@
 
 Userportal::User_data file;
 Userportal::Project_portal version;
-Version_control::File_version control;
+Version_control::File_version numbers;
 
 class Notepad_File
 {
@@ -20,7 +20,7 @@ protected:
 	int action = 1, version_num = 1;
 
 public:
-	Version_control::Versioning* c = control.add_commit();
+	Version_control::Versioning* n = numbers.add_commit();
 	void read_file()
 	{
 		std::fstream input("Project_Details.bin", std::ios::in | std::ios::binary);
@@ -61,27 +61,27 @@ public:
 	void read_file_version()
 	{
 		std::fstream input("Versioning.bin", std::ios::in | std::ios::binary);
-		if (!version.ParseFromIstream(&input))
+		if (!numbers.ParseFromIstream(&input))
 			std::cerr << "Versioning.bin , File not Found" << endl;
 	}
 
 	void write_file_version()
 	{
 		std::fstream output("Versioning.bin", std::ios::out | std::ios::trunc | std::ios::binary);
-		if (!version.SerializeToOstream(&output))
+		if (!numbers.SerializeToOstream(&output))
 			std::cerr << "Failed to Write the Details in File" << endl;
 	}
 
 	void file_version(string data)
 	{
 		string text = data;
-		c->set_actions(action);
-		c->set_version_no(version_num);
+		n->set_actions(action);
+		n->set_version_no(version_num);
 
 		time_t result = time(NULL);
 		ctime_s(C_time, sizeof C_time, &result);
-		c->set_created_time(C_time);
-		c->add_content(text);
+		n->set_created_time(C_time);
+		n->add_content(text);
 
 		write_file_version();
 	}
@@ -303,15 +303,20 @@ public:
 			{
 				cout << "Enter the Version Number, To Revert : ";
 				cin >> V_num;
-				if (version.versions(i).version_no() == V_num)
+
+				for (int i = 0; i < numbers.commit_size(); ++i)
 				{
-					print_version();
+					if (numbers.commit(i).version_no() == V_num)
+					{
+						P_ID = version.versions(i).projectid();
+						print_version(P_ID);
+					}
 				}
 			}
 		}
 	}
 
-	void print_version()
+	void print_version(int P_ID)
 	{
 		project_id = P_ID;
 		std::fstream textfile;
@@ -343,11 +348,22 @@ public:
 		for (int i = 0; i < version.versions_size(); ++i)
 		{
 			File_version v = version.versions(i);
-			cout << "Actions : " << v.actions() << endl;
+			
 			cout << "Version ID : " << v.version_id() << endl;
-			cout << "Version Number :  " << v.version_no() << endl;
-			cout << "Created Time : " << v.created_time();
 			cout << "Project ID : " << v.projectid() << endl;
+
+			cout << endl;
+		}
+
+		cout << endl;
+
+		for (int i = 0; i < numbers.commit_size(); ++i)
+		{
+			Version_control::Versioning n = numbers.commit(i);
+
+			cout << "Actions : " << n.actions() << endl;
+			cout << "Version Number :  " << n.version_no() << endl;
+			cout << "Created Time : " << n.created_time();
 
 			cout << endl;
 		}
