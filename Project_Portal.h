@@ -317,14 +317,14 @@ public:
 					if (numbers.commit(i).version_no() == V_num)
 					{
 						P_ID = version.versions(i).projectid();
-						print_version(P_ID);
+						display_version(P_ID);
 					}
 				}
 			}
 		}
 	}
 
-	void print_version(int P_ID)
+	void display_version(int P_ID)
 	{
 		project_id = P_ID;
 		std::fstream textfile;
