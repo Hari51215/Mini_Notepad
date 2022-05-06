@@ -108,6 +108,11 @@ public:
 	{
 		cout << "Total Existing File : " << file.projects_size() << endl << endl;
 
+		for (int i = 0; i < file.projects_size(); ++i)
+		{
+			cout << "File Name : " << file.projects(i).project_name() <<" / File ID : " << file.projects(i).project_id() << endl;
+		}
+		cout << endl;
 		cout << "Enter the File ID  : ";
 		cin >> P_ID;
 
@@ -115,7 +120,7 @@ public:
 		{
 			if (file.projects(i).project_id() == P_ID)
 			{
-				cout << "1. Add Content\n2. Update Content\n3. Remove Content\n4. Display Content\n5. Revert Version" << endl << endl;
+				cout << "1. Add Content\n2. Update Content\n3. Remove Content\n4. Display Content\n5. Revert Version\n6. Quit" << endl << endl;
 				cout << "Select your option, To perform the action : ";
 				cin >> select;
 				cout << endl;
@@ -144,6 +149,9 @@ public:
 				case 5:
 					revert_version();
 					break;
+				
+				case 6:
+					return;
 
 				default:
 					cout << "Option Not Available." << endl;
