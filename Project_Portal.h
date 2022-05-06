@@ -305,13 +305,13 @@ public:
 				cin >> V_num;
 				if (version.versions(i).version_no() == V_num)
 				{
-					print_version(V_num);
+					print_version();
 				}
 			}
 		}
 	}
 
-	void print_version(int num)
+	void print_version()
 	{
 		project_id = P_ID;
 		std::fstream textfile;
